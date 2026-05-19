@@ -65,7 +65,6 @@ dist*
 resources/node
 resources/tools
 resources/python
-docs/
 /.mcp.json
 /eng.traineddata
 /jpn.traineddata
