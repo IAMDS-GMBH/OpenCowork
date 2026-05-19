@@ -5,6 +5,7 @@
  * Runs DNS → TCP → TLS → Auth → Model checks in sequence,
  * short-circuiting on the first failure.
  */
+
 import * as dns from 'dns';
 import * as net from 'net';
 import * as tls from 'tls';
