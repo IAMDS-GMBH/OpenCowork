@@ -9,8 +9,27 @@ permissions:
   contents: write
 
 jobs:
+  guard:
+    name: Verify tag is on main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+
+      - name: Check tagged commit is reachable from main
+        run: |
+          git fetch --no-tags origin refs/heads/main:refs/remotes/origin/main
+          TAG_COMMIT="$(git rev-parse "$GITHUB_SHA^{commit}")"
+          if ! git merge-base --is-ancestor "$TAG_COMMIT" refs/remotes/origin/main; then
+            echo "::error::Tag ${{ github.ref_name }} (${TAG_COMMIT}) is not on the main branch. Only tags created from main are allowed to trigger a release."
+            exit 1
+          fi
+          echo "Tag ${{ github.ref_name }} is on main ✓"
+
   lint-and-test:
     name: Lint & Test
+    needs: [guard]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
