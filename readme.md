@@ -328,7 +328,69 @@ We welcome contributions! Whether it's a new Skill, a UI fix, or a security impr
 
 ---
 
-## 💬 Community
+## � Releases
+
+### How to Generate a New Release
+
+Open Cowork uses semantic versioning with automated tagging via Husky. To create a new release:
+
+#### 1. Preview the Next Version (Dry-run)
+
+Before committing, check what the next version will be:
+
+```bash
+npm run tag:dry-run
+```
+
+This will show you: `0.0.3 -> 0.0.4 (patch)` without creating any commits or tags.
+
+#### 2. Create a Release (Choose One)
+
+**Patch Release** (bugfixes, e.g., 0.0.3 → 0.0.4):
+```bash
+npm run tag:patch
+```
+
+**Minor Release** (new features, e.g., 0.0.3 → 0.1.0):
+```bash
+npm run tag:minor
+```
+
+**Major Release** (breaking changes, e.g., 0.0.3 → 1.0.0):
+```bash
+npm run tag:major
+```
+
+#### 3. Push the Release to GitHub
+
+```bash
+git push --follow-tags
+```
+
+This pushes the release commit and the annotated tag, which will automatically trigger the [Release Workflow](/.github/workflows/release.yml).
+
+### What Happens After Push
+
+1. **Guard Job** verifies the tag is on `main`.
+2. **Lint & Test** runs all checks (eslint, tsc, vitest).
+3. **Build macOS** creates `.dmg` and `.zip` installers.
+4. **Build Windows** creates `.exe` and `.nsis` installers (currently disabled).
+5. All artifacts are uploaded as a draft release to [GitHub Releases](https://github.com/OpenCoworkAI/open-cowork/releases).
+
+### Release Checklist
+
+- [ ] Code changes committed to `main`
+- [ ] Run `npm run tag:dry-run` to verify version
+- [ ] Run `npm run tag:patch/minor/major`
+- [ ] Run `git push --follow-tags`
+- [ ] Wait for workflow to complete (~10-15 minutes)
+- [ ] Review the draft release on [GitHub Releases](https://github.com/OpenCoworkAI/open-cowork/releases)
+- [ ] Publish the release (remove draft status)
+- [ ] Homebrew tap is automatically updated via external webhook
+
+---
+
+## �💬 Community
 
 Join our community for support and discussion:
 
