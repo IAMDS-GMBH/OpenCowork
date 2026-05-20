@@ -58,5 +58,5 @@ fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
 
 execSync(`git add package.json`);
 execSync(`git commit -m "chore(release): v${newVersion}"`);
-execSync(`git tag ${newTag}`);
+execSync(`git tag -a ${newTag} -m "Release ${newTag}"`);
 console.log(`Tagged as ${newTag}`);
