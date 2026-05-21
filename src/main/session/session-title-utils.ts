@@ -37,7 +37,7 @@ export function buildTitlePrompt(prompt: string): string {
   return [
     'Generate a short title for the following user request. Rules:',
     '- Max 15 characters (<=15 chars)',
-    '- 回复与用户请求相同的语言 / Reply in the same language as the user request (同语言 / same language)',
+    '- Reply in English only',
     '- No quotes, numbering, or punctuation at the end',
     '',
     `User request: ${prompt.trim()}`,
