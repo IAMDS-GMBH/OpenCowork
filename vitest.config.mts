@@ -5,10 +5,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    // Resolve Electron to a stable test double so CI does not depend on the
-    // postinstall-generated `node_modules/electron/path.txt` file.
+    // Resolve Electron and better-sqlite3 to stable test doubles.
+    // better-sqlite3 is compiled for Electron and cannot load under system Node.js;
+    // the mock wraps Node's built-in node:sqlite (DatabaseSync) instead.
     alias: {
       electron: path.resolve(import.meta.dirname, './tests/mocks/electron.ts'),
+      'better-sqlite3': path.resolve(import.meta.dirname, './tests/mocks/better-sqlite3.ts'),
     },
     server: {
       deps: {
